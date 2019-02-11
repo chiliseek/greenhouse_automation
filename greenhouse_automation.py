@@ -14,9 +14,12 @@ class DHT22():
         pin = 14
         self.temperature, self.humidity = Adafruit_DHT.read_retry(sensor, pin)
 
+    def refresh(self):
+    self.temperature, self.humidity = Adafruit_DHT.read_retry(sensor, pin)
+
     def get_temp(self):
         """return temperature"""
-        print("Temperature: " + str(self.temperature) + " °C")
+        return self.get_temp()
 
 
 print("Testing DHT22...")
