@@ -21,6 +21,7 @@ class DHT22():
     def get_temp(self):
         """return temperature"""
         self.refresh()
+        self.temperature = format(self.temperature, '.2f')
         return self.temperature
 
     def get_humi(self):
@@ -34,7 +35,7 @@ dht22 = DHT22()
 sleep(2)
 temp = dht22.get_temp()
 humi = dht22.get_humi()
-print("Temperature: " + str(temp[0:0.1f]) + " °C\nHumidity: " + str(humi[0:0.1f]) + " %")
+print("Temperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %")
 
 
 
