@@ -14,7 +14,7 @@ class DHT22():
         self.datafile = 'dht22_data.json'
         self.sensor = Adafruit_DHT.DHT22
         self.pin = 14
-        self.temperature, self.humidity = Adafruit_DHT.read_retry(self.sensor, self.pin)
+        self.humidity, self.temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
         self.temp_min = ''
         self.temp_max = ''
         self.humi_min = ''
@@ -22,6 +22,7 @@ class DHT22():
 
     def refresh(self):
         """Refresh the sensor data"""
+        print("Refreshing DHT22 data...")
         self.humidity, self.temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
 
     def get_temp(self):
@@ -44,13 +45,26 @@ class DHT22():
             self.humi_min,     # 4
             self.humi_max,     # 5
         ]
-
         with open(self.datafile, 'w') as file_object:
             json.dump(data, file_object)
+        print("Saving data...")
 
     def load_data(self):
         """if there is data, load it"""
-        print("test")
+        try:
+            with open(self.datafile) as file_object:
+                data = json.load(file_object)
+        except FileNotFoundError:
+            self.save_data()
+            print("There is no old data. Creating a new datafile...")
+
+        else:
+            data[0] = self.temperature
+            data[1] = self.humidity
+            data[2] = self.temp_min
+            data[3] = self.temp_max
+            data[4] = self.humi_min
+            data[5] = self.humi_max
 
 
 print("Testing DHT22... Initializing DHT22 Class")
