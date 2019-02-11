@@ -20,8 +20,8 @@ class DHT22():
 
 
 print("Testing DHT22...")
-
-print(humidity, temperature)
+dht22 = DHT22()
+dht22.get_temp()
 
 
 print("\nTesting Relay...")
