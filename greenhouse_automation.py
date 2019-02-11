@@ -34,9 +34,9 @@ dht22 = DHT22()
 sleep(2)
 temp = dht22.get_temp()
 humi = dht22.get_humi()
-print("Temperature: " + str(temp) + " °C\n Humidity: " + str(humi) + " %")
-
-
+print("Temperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %")
+sleep(10)
+print("Temperature: " + str(dht22.get_temp()) + " °C\nHumidity: " + str(dht22.get_humi()) + " %")
 
 
 
