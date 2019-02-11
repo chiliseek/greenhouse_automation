@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 #  Greenhouse automation with python.
 from time import sleep
+import json
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 
@@ -19,11 +20,19 @@ class DHT22():
 
     def get_temp(self):
         """return temperature"""
+        self.refresh()
         return self.temperature
 
+    def get_humi(self):
+        """return humidity"""
+        self.refresh()
+        return self.humidity
 
-print("Testing DHT22...")
+
+
+print("Testing DHT22... Initializing DHT22 Class")
 dht22 = DHT22()
+sleep(2)
 temp = dht22.get_temp()
 print(temp)
 
