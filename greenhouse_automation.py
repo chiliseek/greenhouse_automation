@@ -13,7 +13,7 @@ print(humidity, temperature)
 
 """
 class DHT22():
-    """Access the DHT22 sensor"""
+    
     
     def __init__(self):
 """
