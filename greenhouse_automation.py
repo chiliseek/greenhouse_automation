@@ -11,12 +11,12 @@ class DHT22():
 
     def __init__(self):
         """Initialize dht22 sensor and the GPIO pin its connected to"""
-        sensor = Adafruit_DHT.DHT22
-        pin = 14
-        self.temperature, self.humidity = Adafruit_DHT.read_retry(sensor, pin)
+        self.sensor = Adafruit_DHT.DHT22
+        self.pin = 14
+        self.temperature, self.humidity = Adafruit_DHT.read_retry(self.sensor, self.pin)
 
     def refresh(self):
-        self.temperature, self.humidity = Adafruit_DHT.read_retry(sensor, pin)
+        self.temperature, self.humidity = Adafruit_DHT.read_retry(self.sensor, self.pin)
 
     def get_temp(self):
         """return temperature"""
