@@ -31,12 +31,12 @@ counter = 0
 while counter < 1:  # Relay Knight Rider
     for pin in pinliste:
         GPIO.output(pin, GPIO.LOW)
-        time.sleep(0.05)
+        sleep(0.05)
         GPIO.output(pin, GPIO.HIGH)
 
     for pin in reversed(pinliste):
         GPIO.output(pin, GPIO.LOW)
-        time.sleep(0.05)
+        sleep(0.05)
         GPIO.output(pin, GPIO.HIGH)
 
     counter +=1
