@@ -4,10 +4,23 @@ from time import sleep
 import RPi.GPIO as GPIO
 import Adafruit_DHT
 
+
+class DHT22():
+    """Initialize and access DHT22 sensor"""
+
+    def __init__(self):
+        """Initialize dht22 sensor and the GPIO pin its connected to"""
+        sensor = Adafruit_DHT.DHT22
+        pin = 14
+        self.temperature, self.humidity = Adafruit_DHT.read_retry(sensor, pin)
+
+    def get_temp(self):
+        """return temperature"""
+        print("Temperature: " + str(self.temperature) + " °C")
+
+
 print("Testing DHT22...")
-sensor = Adafruit_DHT.DHT22
-pin = 14
-humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
+
 print(humidity, temperature)
 
 
@@ -42,11 +55,3 @@ while counter < 1:  # Relay Knight Rider
     counter +=1
 
 print("Stopped Knight Rider...")
-
-
-"""
-class DHT22():
-    
-    
-    def __init__(self):
-"""
