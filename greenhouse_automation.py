@@ -15,17 +15,17 @@ class DHT22():
         self.temperature, self.humidity = Adafruit_DHT.read_retry(sensor, pin)
 
     def refresh(self):
-    self.temperature, self.humidity = Adafruit_DHT.read_retry(sensor, pin)
+        self.temperature, self.humidity = Adafruit_DHT.read_retry(sensor, pin)
 
     def get_temp(self):
         """return temperature"""
-        return self.get_temp()
+        return self.temperature
 
 
 print("Testing DHT22...")
 dht22 = DHT22()
-dht22.get_temp()
-
+temp = dht22.get_temp()
+print(temp)
 
 print("\nTesting Relay...")
 GPIO.setmode(GPIO.BCM)  # Setting GPIO mode
