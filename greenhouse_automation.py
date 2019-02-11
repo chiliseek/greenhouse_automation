@@ -11,32 +11,54 @@ class DHT22():
 
     def __init__(self):
         """Initialize dht22 sensor and the GPIO pin its connected to"""
+        self.datafile = 'dht22_data.json'
         self.sensor = Adafruit_DHT.DHT22
         self.pin = 14
         self.temperature, self.humidity = Adafruit_DHT.read_retry(self.sensor, self.pin)
+        self.temp_min = ''
+        self.temp_max = ''
+        self.humi_min = ''
+        self.humi_max = ''
 
     def refresh(self):
+        """Refresh the sensor data"""
         self.humidity, self.temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
 
     def get_temp(self):
-        """return temperature"""
-        self.refresh()
-        self.temperature = format(self.temperature, '.2f')
+        """return formatted temperature"""
+        self.temperature = format(self.temperature, '.1f')
         return self.temperature
 
     def get_humi(self):
-        """return humidity"""
-        self.refresh()
+        """return formatted humidity"""
+        self.humidity = format(self.humidity, '.1f')
         return self.humidity
+
+    def save_data(self):
+        """saves all data to a json file"""
+        data = [
+            self.temperature,  # 0 - Index
+            self.humidity,     # 1
+            self.temp_min,     # 2
+            self.temp_max,     # 3
+            self.humi_min,     # 4
+            self.humi_max,     # 5
+        ]
+
+        with open(self.datafile, 'w') as file_object:
+            json.dump(data, file_object)
+
+    def load_data(self):
+        """if there is data, load it"""
+        print("test")
 
 
 print("Testing DHT22... Initializing DHT22 Class")
 dht22 = DHT22()
-sleep(2)
 temp = dht22.get_temp()
 humi = dht22.get_humi()
 print("Temperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %")
-
+dht22.save_data()
 
 
 
