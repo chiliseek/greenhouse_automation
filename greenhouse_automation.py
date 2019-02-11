@@ -13,6 +13,7 @@ print(humidity, temperature)
 
 print("\nTesting Relay...")
 GPIO.setmode(GPIO.BCM)  # Setting GPIO mode
+GPIO.setwarnings(False)  # disable warnings
 
 pinliste = [
     23,  # Channel 1
@@ -25,7 +26,7 @@ print("Initializing relay board...")
 for pin in pinliste:
     GPIO.setup(pin, GPIO.OUT)
 
-print("Starting Knight Rider in a second...")
+print("Starting Knight Rider...")
 
 counter = 0
 while counter < 1:  # Relay Knight Rider
