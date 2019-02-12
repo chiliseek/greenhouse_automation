@@ -70,22 +70,23 @@ class DHT22():
             if data[5] > self.humi_max:
                 data[5] = self.humi_max
 
-    def get_minmax(self):
+    def set_minmax(self):
         """determine min and max temp/humi values"""
-        current_temp = self.get_temp()
-        if current_temp > self.temp_max:  # Set max temperature
+        if float(self.temperature) > float(self.temp_max):  # Set max temperature
             print("New max temperature: " + str(self.get_temp()) + " °C")
-            self.temp_max = self.get_temp()
-        if self.get_temp() < self.temp_min:  # Set min temperature
+            self.temp_max = float(self.humidity)
+        else:
+            print("No new max value :(")
+        if float(self.temperature) < float(self.temp_min):  # Set min temperature
             print("New min temperature: " + str(self.get_temp()) + " °C")
-            self.temp_min = self.get_temp()
+            self.temp_min = float(self.temperature)
 
-        if self.get_humi() > self.humi_max:  # Set max humidity
+        if float(self.humidity) > float(self.humi_max):  # Set max humidity
             print("New max humidity: " + str(self.get_temp()) + " %")
-            self.humi_max = self.get_humi()
-        if self.get_humi() < self.humi_min:  # Set min humidity
+            self.humi_max = float(self.humidity)
+        if float(self.humidity) < float(self.humi_min):  # Set min humidity
             print("New min humidity: " + str(self.get_temp()) + " %")
-            self.humi_min = self.get_humi()
+            self.humi_min = float(self.humidity)
 
 
 print("Testing DHT22... Initializing DHT22 Class")
@@ -93,8 +94,8 @@ dht22 = DHT22()
 temp = dht22.get_temp()
 humi = dht22.get_humi()
 print("Temperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %")
-dht22.get_minmax()
 dht22.load_data()
+dht22.set_minmax()
 
 
 print("\nTesting Relay...")
