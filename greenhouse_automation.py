@@ -101,6 +101,7 @@ print("Temperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %")
 dht22.load_data()
 sleep(2)
 dht22.set_minmax()
+dht22.save_data()
 
 
 print("\nTesting Relay...")
