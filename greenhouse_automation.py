@@ -50,7 +50,7 @@ class DHT22():
         ]
         with open(self.datafile, 'w') as file_object:
             json.dump(data, file_object)
-        print("Saving data ...")
+        print("Saving data ...\n")
 
     def load_data(self):
         """if there is data, load it"""
@@ -116,31 +116,31 @@ class Relay(DHT22):
         if chan == 1:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                print("Relay channel " + str(chan) + " activated.")
+                print("Relay channel " + str(chan) + colored(' activated', 'green') + ".")
             elif status == 0:
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                print("Relay channel " + str(chan) + " deactivated.")
+                print("Relay channel " + str(chan) + colored(' deactivated', 'magenta') + ".")
         if chan == 2:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                print("Relay channel " + str(chan) + " activated.")
+                print("Relay channel " + str(chan) + colored(' activated', 'green') + ".")
             elif status == 0:
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                print("Relay channel " + str(chan) + " deactivated.")
+                print("Relay channel " + str(chan) + colored(' deactivated', 'magenta') + ".")
         if chan == 3:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                print("Relay channel " + str(chan) + " activated.")
+                print("Relay channel " + str(chan) + colored(' activated', 'green') + ".")
             elif status == 0:
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                print("Relay channel " + str(chan) + " deactivated.")
+                print("Relay channel " + str(chan) + colored(' deactivated', 'magenta') + ".")
         if chan == 4:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                print("Relay channel " + str(chan) + " activated.")
+                print("Relay channel " + str(chan) + colored(' activated', 'green') + ".")
             elif status == 0:
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                print("Relay channel " + str(chan) + " deactivated.")
+                print("Relay channel " + str(chan) + colored(' deactivated', 'magenta') + ".")
 
     def knight_rider(self, times='0'):
         """Test mode: switch all relays on and off in knight rider style"""
@@ -155,6 +155,13 @@ class Relay(DHT22):
                 sleep(0.1)
                 self.switch_status(0, chan)
             counter += 1
+
+    def check_temp(self):
+        """Switch relay status based on temperature/humidity changes"""
+        if self.temperature < 25:  # Seedling heat mat control
+            self.switch_status(1, 1)
+        if self.temperature >= 30:
+            self.switch_status(0, 1)
 
 
 print("Initializing DHT22 Class...")
@@ -173,5 +180,6 @@ while True:
     dht22.refresh()
     dht22.set_minmax()
     dht22.save_data()
+    relay.check_temp()
     print("\n. . . Next measurement in 10 seconds . . .")
     sleep(10)
