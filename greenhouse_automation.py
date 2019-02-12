@@ -90,11 +90,12 @@ class DHT22():
             self.humi_min = self.humidity
 
 
-class Relay():
+class Relay(DHT22):
     """Manage 4 channel relay board"""
 
     def __init__(self):
         """Initialize the relay board and its channels"""
+        super().__init__()
         GPIO.setmode(GPIO.BCM)  # Setting GPIO mode
         GPIO.setwarnings(False)  # disable warnings
         self.channel = {
