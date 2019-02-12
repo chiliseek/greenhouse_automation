@@ -62,16 +62,16 @@ class DHT22():
             data[0] = self.temperature
             data[1] = self.humidity
             if data[2] < self.temp_min:  # checking if max/min value are correct
-                print("New minimal temperature: " + str(self.get_temp()) + " °C")
+                print("New minimal temperature: " + str(data[2]) + " °C")
                 data[2] = self.temp_min
             if data[3] > self.temp_max:
-                print("New maximal temperature: " + str(self.get_temp()) + " °C")
+                print("New maximal temperature: " + str(data[3]) + " °C")
                 data[3] = self.temp_max
             if data[4] < self.humi_min:
-                print("New minimal humidity: " + str(self.get_temp()) + " %")
+                print("New minimal humidity: " + str(data[4]) + " %")
                 data[4] = self.humi_min
             if data[5] > self.humi_max:
-                print("New maximal humidity: " + str(self.get_temp()) + " %")
+                print("New maximal humidity: " + str(data[5]) + " %")
                 data[5] = self.humi_max
 
     def set_minmax(self):
