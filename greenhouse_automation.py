@@ -24,10 +24,10 @@ class DHT22():
         self.humi_max = float(format(self.humidity, '.1f'))
 
     def print_data(self):
-        """Print temperature and humidity. later maybe min max values too"""
-        print("\nTemperature: " + str(self.temperature) + " °C\t" + colored(self.temp_min, 'blue') + " / " +
+        """Print temperature, humidity and min max values"""
+        print("\nTemperature: " + str(self.temperature) + " °C\t" + colored(self.temp_min, 'cyan') + " / " +
               colored(self.temp_max, 'red') + " °C")
-        print("Humidity: " + str(self.humidity) + " %\t" + colored(self.humi_min, 'blue') + " / " +
+        print("Humidity: " + str(self.humidity) + " %\t" + colored(self.humi_min, 'cyan') + " / " +
               colored(self.humi_max, 'red') + "  %\n")
 
     def refresh(self):
@@ -65,32 +65,32 @@ class DHT22():
             data[0] = self.temperature
             data[1] = self.humidity
             if data[2] < self.temp_min:  # checking if max/min value are correct
-                print("Setting minimal temperature (" + str(data[2]) + " °C) from datafile.")
+                print("Setting minimal temperature (" + colored(data[2], 'cyan') + " °C) from datafile.")
                 self.temp_min = data[2]
             if data[3] > self.temp_max:
-                print("Setting maximal temperature (" + str(data[3]) + " °C) from datafile.")
+                print("Setting maximal temperature (" + colored(data[3], 'red') + " °C) from datafile.")
                 self.temp_max = data[3]
             if data[4] < self.humi_min:
-                print("Setting minimal humidity (" + str(data[4]) + " %) from datafile.")
+                print("Setting minimal humidity (" + colored(data[4], 'cyan') + " %) from datafile.")
                 self.humi_min = data[4]
             if data[5] > self.humi_max:
-                print("Setting maximal humidity (" + str(data[5]) + " %) from datafile.")
+                print("Setting maximal humidity (" + colored(data[5], 'red') + " %) from datafile.")
                 self.humi_max = data[5]
 
     def set_minmax(self):
         """determine min and max temp/humi values"""
         if self.temperature > self.temp_max:  # Set max temperature
-            print("+ New maximal temperature: " + str(self.temperature) + " °C")
+            print(colored('+', 'yellow') + " New maximal temperature: " + colored(self.temperature, 'red') + " °C")
             self.temp_max = self.temperature
         if self.temperature < self.temp_min:  # Set min temperature
-            print("+ New minimal temperature: " + str(self.temperature) + " °C")
+            print(colored('+', 'yellow') + " New minimal temperature: " + colored(self.temperature, 'lightcyan') + " °C")
             self.temp_min = self.temperature
 
         if self.humidity > self.humi_max:  # Set max humidity
-            print("+ New maximal humidity: " + str(self.humidity) + " %")
+            print(colored('+', 'yellow') + " New maximal humidity: " + str(self.humidity) + " %")
             self.humi_max = self.humidity
         if self.humidity < self.humi_min:  # Set min humidity
-            print("+ New minimal humidity: " + str(self.humidity) + " %")
+            print(colored('+', 'yellow') + " New minimal humidity: " + str(self.humidity) + " %")
             self.humi_min = self.humidity
 
 
