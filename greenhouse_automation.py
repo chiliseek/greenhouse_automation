@@ -29,14 +29,6 @@ class DHT22():
         self.temperature = float(format(self.temperature, '.1f'))
         self.humidity = float(format(self.humidity, '.1f'))
 
-    def get_temp(self):
-        """return formatted temperature"""
-        return self.temperature
-
-    def get_humi(self):
-        """return formatted humidity"""
-        return self.humidity
-
     def save_data(self):
         """saves all data to a json file"""
         data = [
@@ -79,24 +71,24 @@ class DHT22():
     def set_minmax(self):
         """determine min and max temp/humi values"""
         if self.temperature > self.temp_max:  # Set max temperature
-            print("New maximal temperature: " + str(self.get_temp()) + " °C")
+            print("New maximal temperature: " + str(self.temperature) + " °C")
             self.temp_max = self.temperature
         if self.temperature < self.temp_min:  # Set min temperature
-            print("New minimal temperature: " + str(self.get_temp()) + " °C")
+            print("New minimal temperature: " + str(self.temperature) + " °C")
             self.temp_min = self.temperature
 
         if self.humidity > self.humi_max:  # Set max humidity
-            print("New maximal humidity: " + str(self.get_temp()) + " %")
-            self.humi_max = float(self.humidity)
+            print("New maximal humidity: " + str(self.humidity) + " %")
+            self.humi_max = self.humidity
         if self.humidity < self.humi_min:  # Set min humidity
-            print("New minimal humidity: " + str(self.get_temp()) + " %")
+            print("New minimal humidity: " + str(self.humidity) + " %")
             self.humi_min = self.humidity
 
 
 print("Testing DHT22... Initializing DHT22 Class")
 dht22 = DHT22()
-temp = dht22.get_temp()
-humi = dht22.get_humi()
+temp = dht22.temperature
+humi = dht22.humidity
 print("\nTemperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %\n")
 dht22.load_data()
 print("\nSetting min max values...")
