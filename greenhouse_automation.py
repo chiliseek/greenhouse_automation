@@ -109,43 +109,34 @@ class Relay():
 
     def switch_status(self, status, chan):
         """Turn relay on"""
-        while True:
-            if chan == 1:
-                if status == 1:
-                    GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                    print("Relay channel " + str(chan) + " activated.")
-                    break
-                elif status == 0:
-                    GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                    print("Relay channel " + str(chan) + " deactivated.")
-                    break
-            if chan == 2:
-                if status == 1:
-                    GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                    print("Relay channel " + str(chan) + " activated.")
-                    break
-                elif status == 0:
-                    GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                    print("Relay channel " + str(chan) + " deactivated.")
-                    break
-            if chan == 3:
-                if status == 1:
-                    GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                    print("Relay channel " + str(chan) + " activated.")
-                    break
-                elif status == 0:
-                    GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                    print("Relay channel " + str(chan) + " deactivated.")
-                    break
-            if chan == 4:
-                if status == 1:
-                    GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                    print("Relay channel " + str(chan) + " activated.")
-                    break
-                elif status == 0:
-                    GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                    print("Relay channel " + str(chan) + " deactivated.")
-                    break
+        if chan == 1:
+            if status == 1:
+                GPIO.output(self.channel[str(chan)], GPIO.LOW)
+                print("Relay channel " + str(chan) + " activated.")
+            elif status == 0:
+                GPIO.output(self.channel[str(chan)], GPIO.HIGH)
+                print("Relay channel " + str(chan) + " deactivated.")
+        if chan == 2:
+            if status == 1:
+                GPIO.output(self.channel[str(chan)], GPIO.LOW)
+                print("Relay channel " + str(chan) + " activated.")
+            elif status == 0:
+                GPIO.output(self.channel[str(chan)], GPIO.HIGH)
+                print("Relay channel " + str(chan) + " deactivated.")
+        if chan == 3:
+            if status == 1:
+                GPIO.output(self.channel[str(chan)], GPIO.LOW)
+                print("Relay channel " + str(chan) + " activated.")
+            elif status == 0:
+                GPIO.output(self.channel[str(chan)], GPIO.HIGH)
+                print("Relay channel " + str(chan) + " deactivated.")
+        if chan == 4:
+            if status == 1:
+                GPIO.output(self.channel[str(chan)], GPIO.LOW)
+                print("Relay channel " + str(chan) + " activated.")
+            elif status == 0:
+                GPIO.output(self.channel[str(chan)], GPIO.HIGH)
+                print("Relay channel " + str(chan) + " deactivated.")
 
 
 print("Testing DHT22... Initializing DHT22 Class")
