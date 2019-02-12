@@ -62,30 +62,32 @@ class DHT22():
             data[0] = self.temperature
             data[1] = self.humidity
             if data[2] < self.temp_min:  # checking if max/min value are correct
+                print("New minimal temperature: " + str(self.get_temp()) + " °C")
                 data[2] = self.temp_min
             if data[3] > self.temp_max:
+                print("New maximal temperature: " + str(self.get_temp()) + " °C")
                 data[3] = self.temp_max
             if data[4] < self.humi_min:
+                print("New minimal humidity: " + str(self.get_temp()) + " %")
                 data[4] = self.humi_min
             if data[5] > self.humi_max:
+                print("New maximal humidity: " + str(self.get_temp()) + " %")
                 data[5] = self.humi_max
 
     def set_minmax(self):
         """determine min and max temp/humi values"""
         if float(self.temperature) > float(self.temp_max):  # Set max temperature
-            print("New max temperature: " + str(self.get_temp()) + " °C")
+            print("New maximal temperature: " + str(self.get_temp()) + " °C")
             self.temp_max = float(self.humidity)
-        else:
-            print("No new max value :(")
         if float(self.temperature) < float(self.temp_min):  # Set min temperature
-            print("New min temperature: " + str(self.get_temp()) + " °C")
+            print("New minimal temperature: " + str(self.get_temp()) + " °C")
             self.temp_min = float(self.temperature)
 
         if float(self.humidity) > float(self.humi_max):  # Set max humidity
-            print("New max humidity: " + str(self.get_temp()) + " %")
+            print("New maximal humidity: " + str(self.get_temp()) + " %")
             self.humi_max = float(self.humidity)
         if float(self.humidity) < float(self.humi_min):  # Set min humidity
-            print("New min humidity: " + str(self.get_temp()) + " %")
+            print("New minimal humidity: " + str(self.get_temp()) + " %")
             self.humi_min = float(self.humidity)
 
 
