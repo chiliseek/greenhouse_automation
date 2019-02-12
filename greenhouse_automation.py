@@ -61,16 +61,16 @@ class DHT22():
             data[0] = self.temperature
             data[1] = self.humidity
             if data[2] < self.temp_min:  # checking if max/min value are correct
-                print("Setting minimal temperature (" + str(data[2]) + " °C) from datafile..")
+                print("Setting minimal temperature (" + str(data[2]) + " °C) from datafile.")
                 self.temp_min = data[2]
             if data[3] > self.temp_max:
-                print("Setting maximal temperature (" + str(data[3]) + " °C) from datafile..")
+                print("Setting maximal temperature (" + str(data[3]) + " °C) from datafile.")
                 self.temp_max = data[3]
             if data[4] < self.humi_min:
-                print("Setting minimal humidity (" + str(data[4]) + " %) from datafile..")
+                print("Setting minimal humidity (" + str(data[4]) + " %) from datafile.")
                 self.humi_min = data[4]
             if data[5] > self.humi_max:
-                print("Setting maximal humidity (" + str(data[5]) + " %) from datafile..")
+                print("Setting maximal humidity (" + str(data[5]) + " %) from datafile.")
                 self.humi_max = data[5]
 
     def set_minmax(self):
@@ -90,32 +90,81 @@ class DHT22():
             self.humi_min = self.humidity
 
 
+class Relay():
+    """Manage 4 channel relay board"""
+
+    def __init__(self):
+        """Initialize the relay board and its channels"""
+        GPIO.setmode(GPIO.BCM)  # Setting GPIO mode
+        GPIO.setwarnings(False)  # disable warnings
+        self.channel = {
+            '1': 23,
+            '2': 18,
+            '3': 24,
+            '4': 25,
+        }
+        print("Initializing relay board...")
+        for chan, pin_nr in self.channel.items():
+            GPIO.setup(pin_nr, GPIO.OUT)
+
+    def switch_status(self, status, chan):
+        """Turn relay on"""
+        while True:
+            if chan == 1:
+                if status == 1:
+                    GPIO.output(self.channel[str(chan)], GPIO.LOW)
+                    print("Relay channel " + str(chan) + " activated.")
+                    break
+                elif status == 0:
+                    GPIO.output(self.channel[str(chan)], GPIO.HIGH)
+                    print("Relay channel " + str(chan) + " deactivated.")
+                    break
+            if chan == 2:
+                if status == 1:
+                    GPIO.output(self.channel[str(chan)], GPIO.LOW)
+                    print("Relay channel " + str(chan) + " activated.")
+                    break
+                elif status == 0:
+                    GPIO.output(self.channel[str(chan)], GPIO.HIGH)
+                    print("Relay channel " + str(chan) + " deactivated.")
+                    break
+            if chan == 3:
+                if status == 1:
+                    GPIO.output(self.channel[str(chan)], GPIO.LOW)
+                    print("Relay channel " + str(chan) + " activated.")
+                    break
+                elif status == 0:
+                    GPIO.output(self.channel[str(chan)], GPIO.HIGH)
+                    print("Relay channel " + str(chan) + " deactivated.")
+                    break
+            if chan == 4:
+                if status == 1:
+                    GPIO.output(self.channel[str(chan)], GPIO.LOW)
+                    print("Relay channel " + str(chan) + " activated.")
+                    break
+                elif status == 0:
+                    GPIO.output(self.channel[str(chan)], GPIO.HIGH)
+                    print("Relay channel " + str(chan) + " deactivated.")
+                    break
+
+
 print("Testing DHT22... Initializing DHT22 Class")
 dht22 = DHT22()
 dht22.print_data()
 dht22.load_data()
-print("\nWaiting 5 seconds, refreshing sensor data and setting min/max values...")
-sleep(5)
+print("\nWaiting 2 seconds, refreshing sensor data and setting min/max values...")
+sleep(2)
 dht22.refresh()
 dht22.set_minmax()
 dht22.save_data()
 
-
 print("\nTesting Relay...")
-GPIO.setmode(GPIO.BCM)  # Setting GPIO mode
-GPIO.setwarnings(False)  # disable warnings
+relay = Relay()
+relay.switch_status(1, 2)
+sleep(1)
+relay.switch_status(0, 2)
 
-pinliste = [
-    23,  # Channel 1
-    18,  # Channel 2
-    24,  # Channel 3
-    25,  # Channel 4
-]
-
-print("Initializing relay board...")
-for pin in pinliste:
-    GPIO.setup(pin, GPIO.OUT)
-
+"""
 print("Starting Knight Rider...")
 
 counter = 0
@@ -133,3 +182,4 @@ while counter < 1:  # Relay Knight Rider
     counter +=1
 
 print("Stopped Knight Rider...")
+"""
