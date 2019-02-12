@@ -11,7 +11,7 @@ class DHT22():
     """Initialize and access DHT22 sensor"""
 
     def __init__(self):
-        """Initialize dht22 sensor and the GPIO pin its connected to"""
+        """Initialize dht22 sensor: temperature, humidity & min/max values"""
         self.datafile = 'dht22_data.json'
         self.sensor = Adafruit_DHT.DHT22
         self.pin = 14
@@ -39,7 +39,7 @@ class DHT22():
         self.print_data()
 
     def save_data(self):
-        """saves all data to a json file"""
+        """Save all data to a json file"""
         data = [
             self.temperature,  # 0 - Index
             self.humidity,     # 1
@@ -53,7 +53,7 @@ class DHT22():
         print("Saving data ...\n")
 
     def load_data(self):
-        """if there is data, load it"""
+        """If there is data, load it"""
         try:
             with open(self.datafile) as file_object:
                 data = json.load(file_object)
@@ -78,7 +78,7 @@ class DHT22():
                 self.humi_max = data[5]
 
     def set_minmax(self):
-        """determine min and max temp/humi values"""
+        """Determine min/max values"""
         if self.temperature > self.temp_max:  # Set max temperature
             print(colored('  +++', 'yellow') + " New maximal temperature: " + colored(self.temperature, 'red') + " °C")
             self.temp_max = self.temperature
@@ -112,7 +112,7 @@ class Relay(DHT22):
             GPIO.setup(pin_nr, GPIO.OUT)
 
     def switch_status(self, status, chan):
-        """Turn relay on"""
+        """Turn relay channels on and off"""
         if chan == 1:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
