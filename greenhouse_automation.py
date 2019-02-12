@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # Greenhouse automation with python.
 from time import sleep
+from termcolor import colored
 import json
 import RPi.GPIO as GPIO
 import Adafruit_DHT
@@ -24,7 +25,10 @@ class DHT22():
 
     def print_data(self):
         """Print temperature and humidity. later maybe min max values too"""
-        print("\nTemperature: " + str(self.temperature) + " °C\nHumidity: " + str(self.humidity) + " %\n")
+        print("\nTemperature: " + str(self.temperature) + " °C\t" + colored(self.temp_min, 'blue') + " / " +
+              colored(self.temp_max, 'red') + " °C")
+        print("Humidity: " + str(self.humidity) + " %\t" + colored(self.humi_min, 'blue') + " / " +
+              colored(self.humi_max, 'red') + "  %\n")
 
     def refresh(self):
         """Refresh the sensor data and print"""
@@ -104,7 +108,6 @@ class Relay(DHT22):
             '3': 24,
             '4': 25,
         }
-        print("Initializing relay board...")
         for chan, pin_nr in self.channel.items():
             GPIO.setup(pin_nr, GPIO.OUT)
 
@@ -154,14 +157,14 @@ class Relay(DHT22):
             counter += 1
 
 
-print("\nInitializing Relay...")
-relay = Relay()
-relay.knight_rider()  # Testing relay Knight Rider style
-
 print("Initializing DHT22 Class...")
 dht22 = DHT22()
 dht22.print_data()
 dht22.load_data()
+
+print("\nInitializing Relay...")
+relay = Relay()
+relay.knight_rider()  # Testing relay Knight Rider style
 
 print("\nWaiting 2 seconds, refreshing sensor data and setting min/max values...")
 sleep(2)
