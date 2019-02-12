@@ -91,8 +91,8 @@ temp = dht22.temperature
 humi = dht22.humidity
 print("\nTemperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %\n")
 dht22.load_data()
-print("\nSetting min max values...")
-sleep(30)
+print("\nWait 5 seconds and set min max values...")
+sleep(5)
 dht22.refresh()
 dht22.set_minmax()
 dht22.save_data()
