@@ -72,7 +72,8 @@ class DHT22():
 
     def get_minmax(self):
         """determine min and max temp/humi values"""
-        if float(self.get_temp()) > float(self.temp_max):  # Set max temperature
+        current_temp = self.get_temp()
+        if current_temp > self.temp_max:  # Set max temperature
             print("New max temperature: " + str(self.get_temp()) + " °C")
             self.temp_max = self.get_temp()
         if self.get_temp() < self.temp_min:  # Set min temperature
