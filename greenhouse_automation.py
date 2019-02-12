@@ -15,10 +15,10 @@ class DHT22():
         self.sensor = Adafruit_DHT.DHT22
         self.pin = 14
         self.humidity, self.temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-        self.temp_min = ''
-        self.temp_max = ''
-        self.humi_min = ''
-        self.humi_max = ''
+        self.temp_min = format(self.temperature, '.1f')
+        self.temp_max = format(self.temperature, '.1f')
+        self.humi_min = format(self.humidity, '.1f')
+        self.humi_max = format(self.humidity, '.1f')
 
     def refresh(self):
         """Refresh the sensor data"""
@@ -57,14 +57,34 @@ class DHT22():
         except FileNotFoundError:
             self.save_data()
             print("There is no old data. Creating a new datafile...")
-
         else:
+            print("Loading data...")
             data[0] = self.temperature
             data[1] = self.humidity
-            data[2] = self.temp_min
-            data[3] = self.temp_max
-            data[4] = self.humi_min
-            data[5] = self.humi_max
+            if data[2] < self.temp_min:  # checking if max/min value are correct
+                data[2] = self.temp_min
+            if data[3] > self.temp_max:
+                data[3] = self.temp_max
+            if data[4] < self.humi_min:
+                data[4] = self.humi_min
+            if data[5] > self.humi_max:
+                data[5] = self.humi_max
+
+    def get_minmax(self):
+        """determine min and max temp/humi values"""
+        if self.get_temp() > self.temp_max:  # Set max temperature
+            print("New max temperature: " + str(self.get_temp()) + " °C")
+            self.temp_max = self.get_temp()
+        if self.get_temp() < self.temp_min:  # Set min temperature
+            print("New min temperature: " + str(self.get_temp()) + " °C")
+            self.temp_min = self.get_temp()
+
+        if self.get_humi() > self.humi_max:  # Set max humidity
+            print("New max humidity: " + str(self.get_temp()) + " %")
+            self.humi_max = self.get_humi()
+        if self.get_humi() < self.humi_min:  # Set min humidity
+            print("New min humidity: " + str(self.get_temp()) + " %")
+            self.humi_min = self.get_humi()
 
 
 print("Testing DHT22... Initializing DHT22 Class")
@@ -72,9 +92,8 @@ dht22 = DHT22()
 temp = dht22.get_temp()
 humi = dht22.get_humi()
 print("Temperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %")
-dht22.save_data()
-
-
+dht22.get_minmax()
+dht22.load_data()
 
 
 
