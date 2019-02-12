@@ -46,7 +46,7 @@ class DHT22():
         ]
         with open(self.datafile, 'w') as file_object:
             json.dump(data, file_object)
-        print("Saving data...")
+        print("Saving data ...")
 
     def load_data(self):
         """if there is data, load it"""
@@ -76,17 +76,17 @@ class DHT22():
     def set_minmax(self):
         """determine min and max temp/humi values"""
         if self.temperature > self.temp_max:  # Set max temperature
-            print("New maximal temperature: " + str(self.temperature) + " °C")
+            print("+ New maximal temperature: " + str(self.temperature) + " °C")
             self.temp_max = self.temperature
         if self.temperature < self.temp_min:  # Set min temperature
-            print("New minimal temperature: " + str(self.temperature) + " °C")
+            print("+ New minimal temperature: " + str(self.temperature) + " °C")
             self.temp_min = self.temperature
 
         if self.humidity > self.humi_max:  # Set max humidity
-            print("New maximal humidity: " + str(self.humidity) + " %")
+            print("+ New maximal humidity: " + str(self.humidity) + " %")
             self.humi_max = self.humidity
         if self.humidity < self.humi_min:  # Set min humidity
-            print("New minimal humidity: " + str(self.humidity) + " %")
+            print("+ New minimal humidity: " + str(self.humidity) + " %")
             self.humi_min = self.humidity
 
 
@@ -138,39 +138,36 @@ class Relay():
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
                 print("Relay channel " + str(chan) + " deactivated.")
 
+    def knight_rider(self, times='0'):
+        """Test mode: switch all relays on and off in knight rider style"""
+        counter = int(times)
+        while counter < 1:  # Relay Knight Rider
+            for chan in range(1, 5):
+                self.switch_status(1, chan)
+                sleep(0.1)
+                self.switch_status(0, chan)
+            for chan in reversed(range(1, 5)):
+                self.switch_status(1, chan)
+                sleep(0.1)
+                self.switch_status(0, chan)
+            counter += 1
 
-print("Testing DHT22... Initializing DHT22 Class")
+
+print("\nInitializing Relay...")
+relay = Relay()
+relay.knight_rider()  # Testing relay Knight Rider style
+
+print("Initializing DHT22 Class...")
 dht22 = DHT22()
 dht22.print_data()
 dht22.load_data()
+
 print("\nWaiting 2 seconds, refreshing sensor data and setting min/max values...")
 sleep(2)
-dht22.refresh()
-dht22.set_minmax()
-dht22.save_data()
-
-print("\nTesting Relay...")
-relay = Relay()
-relay.switch_status(1, 2)
-sleep(1)
-relay.switch_status(0, 2)
-
-"""
-print("Starting Knight Rider...")
-
-counter = 0
-while counter < 1:  # Relay Knight Rider
-    for pin in pinliste:
-        GPIO.output(pin, GPIO.LOW)
-        sleep(0.05)
-        GPIO.output(pin, GPIO.HIGH)
-
-    for pin in reversed(pinliste):
-        GPIO.output(pin, GPIO.LOW)
-        sleep(0.05)
-        GPIO.output(pin, GPIO.HIGH)
-
-    counter +=1
-
-print("Stopped Knight Rider...")
-"""
+while True:
+    print("\n")
+    dht22.refresh()
+    dht22.set_minmax()
+    dht22.save_data()
+    print("\n. . . Next measurement in 10 seconds . . .")
+    sleep(10)
