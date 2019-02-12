@@ -97,6 +97,7 @@ temp = dht22.get_temp()
 humi = dht22.get_humi()
 print("Temperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %")
 dht22.load_data()
+sleep(2)
 dht22.set_minmax()
 
 
