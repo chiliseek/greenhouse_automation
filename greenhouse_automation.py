@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#  Greenhouse automation with python.
+# Greenhouse automation with python.
 from time import sleep
 import json
 import RPi.GPIO as GPIO
@@ -22,12 +22,17 @@ class DHT22():
         self.humi_min = float(format(self.humidity, '.1f'))
         self.humi_max = float(format(self.humidity, '.1f'))
 
+    def print_data(self):
+        """Print temperature and humidity. later maybe min max values too"""
+        print("\nTemperature: " + str(self.temperature) + " °C\nHumidity: " + str(self.humidity) + " %\n")
+
     def refresh(self):
-        """Refresh the sensor data"""
+        """Refresh the sensor data and print"""
         print("Refreshing DHT22 data...")
         self.humidity, self.temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
         self.temperature = float(format(self.temperature, '.1f'))
         self.humidity = float(format(self.humidity, '.1f'))
+        self.print_data()
 
     def save_data(self):
         """saves all data to a json file"""
@@ -87,11 +92,9 @@ class DHT22():
 
 print("Testing DHT22... Initializing DHT22 Class")
 dht22 = DHT22()
-temp = dht22.temperature
-humi = dht22.humidity
-print("\nTemperature: " + str(temp) + " °C\nHumidity: " + str(humi) + " %\n")
+dht22.print_data()
 dht22.load_data()
-print("\nWait 5 seconds and set min max values...")
+print("\nWaiting 5 seconds, refreshing sensor data and setting min/max values...")
 sleep(5)
 dht22.refresh()
 dht22.set_minmax()
