@@ -79,6 +79,8 @@ class DHT22():
         if float(self.temperature) > float(self.temp_max):  # Set max temperature
             print("New maximal temperature: " + str(self.get_temp()) + " °C")
             self.temp_max = float(self.humidity)
+        else:
+            print(self.temperature, ">", self.temp_max)
         if float(self.temperature) < float(self.temp_min):  # Set min temperature
             print("New minimal temperature: " + str(self.get_temp()) + " °C")
             self.temp_min = float(self.temperature)
