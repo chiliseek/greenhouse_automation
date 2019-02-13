@@ -39,7 +39,7 @@ class DHT22():
         self.print_data()
 
     def silent_refresh(self):
-        """refresh data silently"""
+        """refresh data silently (workaround)"""
         self.humidity, self.temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
         self.temperature = float(format(self.temperature, '.1f'))
         self.humidity = float(format(self.humidity, '.1f'))
@@ -165,7 +165,7 @@ class Relay(DHT22):
     def check_temp(self):
         """Switch relay status based on temperature/humidity changes"""
         sleep(2)
-        self.silent_refresh()
+        self.silent_refresh()  # workaround - is there a better way to get an updated self.temperature?
         if 25 > self.temperature  < 30:  # Seedling heat mat control
             self.switch_status(1, 1)
         if self.temperature >= 30:
