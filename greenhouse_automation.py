@@ -189,5 +189,5 @@ while True:
     dht22.set_minmax()
     dht22.save_data()
     relay.check_temp()
-    print("\n. . . Next measurement in 10 seconds . . .")
-    sleep(10)
+    print("\n. . . Next measurement in 30 seconds . . .")
+    sleep(30)
