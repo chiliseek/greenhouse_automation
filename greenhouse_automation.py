@@ -163,6 +163,7 @@ class Relay(DHT22):
         if self.temperature >= 30:
             self.switch_status(0, 1)
 
+
 print("\nInitializing Relay & DHT22 Class...")
 sensor = Relay()
 sensor.knight_rider()  # Testing relay Knight Rider style
