@@ -165,9 +165,9 @@ class Relay(DHT22):
 
 print("\nInitializing Relay & DHT22 Class...")
 sensor = Relay()
+sensor.knight_rider()  # Testing relay Knight Rider style
 sensor.print_data()
 sensor.load_data()
-sensor.knight_rider()  # Testing relay Knight Rider style
 
 print("\nWaiting 2 seconds, refreshing sensor data and setting min/max values...")
 sleep(2)
