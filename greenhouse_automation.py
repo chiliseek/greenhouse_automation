@@ -38,12 +38,6 @@ class DHT22():
         self.humidity = float(format(self.humidity, '.1f'))
         self.print_data()
 
-    def silent_refresh(self):
-        """refresh data silently (workaround)"""
-        self.humidity, self.temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
-        self.temperature = float(format(self.temperature, '.1f'))
-        self.humidity = float(format(self.humidity, '.1f'))
-
     def save_data(self):
         """Save all data to a json file"""
         data = [
@@ -164,30 +158,24 @@ class Relay(DHT22):
 
     def check_temp(self):
         """Switch relay status based on temperature/humidity changes"""
-        sleep(2)
-        self.silent_refresh()  # workaround - is there a better way to get an updated self.temperature?
         if 25 > self.temperature  < 30:  # Seedling heat mat control
             self.switch_status(1, 1)
         if self.temperature >= 30:
             self.switch_status(0, 1)
 
-
-print("Initializing DHT22 Class...")
-dht22 = DHT22()
-dht22.print_data()
-dht22.load_data()
-
-print("\nInitializing Relay...")
-relay = Relay()
-relay.knight_rider()  # Testing relay Knight Rider style
+print("\nInitializing Relay & DHT22 Class...")
+sensor = Relay()
+sensor.print_data()
+sensor.load_data()
+sensor.knight_rider()  # Testing relay Knight Rider style
 
 print("\nWaiting 2 seconds, refreshing sensor data and setting min/max values...")
 sleep(2)
 while True:
     print("\n")
-    dht22.refresh()
-    dht22.set_minmax()
-    dht22.save_data()
-    relay.check_temp()
+    sensor.refresh()
+    sensor.set_minmax()
+    sensor.save_data()
+    sensor.check_temp()
     print("\n. . . Next measurement in 30 seconds . . .")
     sleep(30)
