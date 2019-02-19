@@ -23,7 +23,7 @@ class DHT22():
         self.humi_min = float(format(self.humidity, '.1f'))
         self.humi_max = float(format(self.humidity, '.1f'))
 
-    def print_data(self):
+    def print_data(self):  # todo: learn about f-strings
         """Print temperature, humidity and min max values"""
         print("\nTemperature: " + str(self.temperature) + " °C\t" + colored(self.temp_min, 'cyan') + " / " +
               colored(self.temp_max, 'red') + " °C")
@@ -39,7 +39,7 @@ class DHT22():
         self.print_data()
 
     def save_data(self):
-        """Save all data to a json file"""
+        """Save all data to a json file - todo: add log functionality (log value and time to create a graph later on)"""
         data = [
             self.temperature,  # 0 - Index
             self.humidity,     # 1
