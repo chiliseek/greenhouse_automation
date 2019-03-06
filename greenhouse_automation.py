@@ -23,16 +23,17 @@ class DHT22():
         self.humi_min = float(format(self.humidity, '.1f'))
         self.humi_max = float(format(self.humidity, '.1f'))
 
-    def print_data(self):  # todo: learn about f-strings
+    def print_data(self):
         """Print temperature, humidity and min max values"""
-        print("\nTemperature: " + str(self.temperature) + " °C\t" + colored(self.temp_min, 'cyan') + " / " +
-              colored(self.temp_max, 'red') + " °C")
-        print("Humidity:    " + str(self.humidity) + "  %\t" + colored(self.humi_min, 'cyan') + " / " +
-              colored(self.humi_max, 'red') + "  %\n")
+        print(f"\nTemperature: {self.temperature} °C\t {colored(self.temp_min, 'cyan')} / "
+              f"{colored(self.temp_max, 'red')}  °C")
+        print(f"Humidity:    {self.humidity}  %\t {colored(self.humi_min, 'cyan')} / {colored(self.humi_max, 'red')}"
+              f"  %\n")
+
 
     def refresh(self):
         """Refresh the sensor data and print"""
-        print("Refreshing DHT22 data...")
+        print(f"Refreshing DHT22 data...")
         self.humidity, self.temperature = Adafruit_DHT.read_retry(self.sensor, self.pin)
         self.temperature = float(format(self.temperature, '.1f'))
         self.humidity = float(format(self.humidity, '.1f'))
@@ -50,7 +51,7 @@ class DHT22():
         ]
         with open(self.datafile, 'w') as file_object:
             json.dump(data, file_object)
-        print("Saving data ...\n")
+        print(f"Saving data ...\n")
 
     def load_data(self):
         """If there is data, load it"""
