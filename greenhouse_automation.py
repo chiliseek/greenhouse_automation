@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/python3.7
 # Greenhouse automation with python.
 from time import sleep
 from termcolor import colored
@@ -28,8 +28,7 @@ class DHT22():
         print(f"\nTemperature: {self.temperature} °C\t {colored(self.temp_min, 'cyan')} / "
               f"{colored(self.temp_max, 'red')}  °C")
         print(f"Humidity:    {self.humidity}  %\t {colored(self.humi_min, 'cyan')} / {colored(self.humi_max, 'red')}"
-              f"  %\n")
-
+              f"   %\n")
 
     def refresh(self):
         """Refresh the sensor data and print"""
@@ -66,32 +65,32 @@ class DHT22():
             data[0] = self.temperature
             data[1] = self.humidity
             if data[2] < self.temp_min:  # checking if max/min value are correct
-                print("Setting minimal temperature (" + colored(data[2], 'cyan') + " °C) from datafile.")
+                print(f"Setting minimal temperature {colored(data[2], 'cyan')} °C) from datafile.")
                 self.temp_min = data[2]
             if data[3] > self.temp_max:
-                print("Setting maximal temperature (" + colored(data[3], 'red') + " °C) from datafile.")
+                print(f"Setting maximal temperature {colored(data[3], 'red')} °C) from datafile.")
                 self.temp_max = data[3]
             if data[4] < self.humi_min:
-                print("Setting minimal humidity    (" + colored(data[4], 'cyan') + "  %) from datafile.")
+                print(f"Setting minimal humidity    {colored(data[4], 'cyan')}  %) from datafile.")
                 self.humi_min = data[4]
             if data[5] > self.humi_max:
-                print("Setting maximal humidity    (" + colored(data[5], 'red') + "  %) from datafile.")
+                print(f"Setting maximal humidity    {colored(data[5], 'red')}  %) from datafile.")
                 self.humi_max = data[5]
 
     def set_minmax(self):
         """Determine min/max values"""
         if self.temperature > self.temp_max:  # Set max temperature
-            print(colored('  +++', 'yellow') + " New maximal temperature: " + colored(self.temperature, 'red') + " °C")
+            print(f"{colored('  +++', 'yellow')} New maximal temperature: {colored(self.temperature, 'red')} °C")
             self.temp_max = self.temperature
         if self.temperature < self.temp_min:  # Set min temperature
-            print(colored('  +++', 'yellow') + " New minimal temperature: " + colored(self.temperature, 'cyan') + " °C")
+            print(f"{colored('  +++', 'yellow')} New minimal temperature: {colored(self.temperature, 'cyan')} °C")
             self.temp_min = self.temperature
 
         if self.humidity > self.humi_max:  # Set max humidity
-            print(colored('  +++', 'yellow') + " New maximal humidity:    " + colored(self.humidity, 'red') + "  %")
+            print(f"{colored('  +++', 'yellow')} New maximal humidity:    {colored(self.humidity, 'red')}  %")
             self.humi_max = self.humidity
         if self.humidity < self.humi_min:  # Set min humidity
-            print(colored('  +++', 'yellow') + " New minimal humidity:    " + colored(self.humidity, 'cyan') + "  %")
+            print(f"{colored('  +++', 'yellow')} New minimal humidity:    {colored(self.humidity, 'cyan')}  %")
             self.humi_min = self.humidity
 
 
@@ -117,31 +116,31 @@ class Relay(DHT22):
         if chan == 1:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                print("Relay channel " + str(chan)  + " is " + colored('activated', 'green') + ".")
+                print(f"Relay channel {chan} is {colored('activated', 'green')}.")
             elif status == 0:
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                print("Relay channel " + str(chan) + " is " + colored('deactivated', 'magenta') + ".")
+                print(f"Relay channel {chan} is {colored('deactivated', 'magenta')}.")
         if chan == 2:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                print("Relay channel " + str(chan) + " is " + colored('activated', 'green') + ".")
+                print(f"Relay channel {chan} is {colored('activated', 'green')}.")
             elif status == 0:
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                print("Relay channel " + str(chan) + " is " + colored('deactivated', 'magenta') + ".")
+                print(f"Relay channel {chan} is {colored('deactivated', 'magenta')}.")
         if chan == 3:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                print("Relay channel " + str(chan) + " is " + colored('activated', 'green') + ".")
+                print(f"Relay channel {chan} is {colored('activated', 'green')}.")
             elif status == 0:
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                print("Relay channel " + str(chan) + " is " + colored('deactivated', 'magenta') + ".")
+                print(f"Relay channel {chan} is {colored('deactivated', 'magenta')}.")
         if chan == 4:
             if status == 1:
                 GPIO.output(self.channel[str(chan)], GPIO.LOW)
-                print("Relay channel " + str(chan) + " is " + colored('activated', 'green') + ".")
+                print(f"Relay channel {chan} is {colored('activated', 'green')}.")
             elif status == 0:
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
-                print("Relay channel " + str(chan) + " is " + colored('deactivated', 'magenta') + ".")
+                print(f"Relay channel {chan} is {colored('deactivated', 'magenta')}.")
 
     def knight_rider(self, times='0'):
         """Test mode: switch all relays on and off in knight rider style"""
