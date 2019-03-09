@@ -7,6 +7,53 @@ import RPi.GPIO as GPIO
 import Adafruit_DHT
 
 
+class StatusLED:
+    """Status LED indicating temperature changes"""
+
+    def __init__(self):
+        """Initializing status LED"""
+        self.led_red = 26
+        self.led_blue = 19
+        self.led_green = 13
+        self.pinlist = [
+            self.led_red,
+            self.led_blue,
+            self.led_green,
+        ]
+        for pin in self.pinlist:
+            GPIO.setup(pin, GPIO.OUT)
+            GPIO.output(pin, GPIO.LOW)
+
+    def green(self):
+        """Switch LED to green"""
+        for pin in self.pinlist:
+            GPIO.output(pin, GPIO.LOW)
+        GPIO.output(self.led_green, GPIO.HIGH)
+
+    def red(self):
+        """Switch LED to red"""
+        for pin in self.pinlist:
+            GPIO.output(pin, GPIO.LOW)
+        GPIO.output(self.led_red, GPIO.HIGH)
+
+    def blue(self):
+        """Switch LED to blue .... TODO: add ONE proper color function"""
+        for pin in self.pinlist:
+            GPIO.output(pin, GPIO.LOW)
+        GPIO.output(self.led_blue, GPIO.HIGH)
+
+    def pulse(self):  # todo: add proper status LED to indicate temperature / buy multicolor LED :)
+        """Flash LED: todo: use RGB-mode to indicate activity"""
+        for pin in self.pinlist:
+            GPIO.output(pin, GPIO.LOW)
+
+        GPIO.output(self.led_blue, GPIO.HIGH)
+        GPIO.output(self.led_red, GPIO.HIGH)
+        sleep(0.2)
+        GPIO.output(self.led_blue, GPIO.LOW)
+        GPIO.output(self.led_red, GPIO.LOW)
+
+
 class DHT22:
     """Initialize and access DHT22 sensor"""
 
@@ -22,6 +69,8 @@ class DHT22:
         self.temp_max = float(format(self.temperature, '.1f'))
         self.humi_min = float(format(self.humidity, '.1f'))
         self.humi_max = float(format(self.humidity, '.1f'))
+
+        #self.led = StatusLED()
 
     def print_data(self):
         """Print temperature, humidity and min max values"""
@@ -103,6 +152,7 @@ class Relay(DHT22):
         super().__init__()
         GPIO.setmode(GPIO.BCM)  # Setting GPIO mode
         GPIO.setwarnings(False)  # disable warnings
+        self.led = StatusLED()
         self.channel = {
             '1': 23,
             '2': 18,
@@ -161,23 +211,13 @@ class Relay(DHT22):
         """Switch relay status based on temperature/humidity changes"""
         if 25 > self.temperature < 30:  # Seedling heat mat control
             self.switch_status(1, 1)
+            if self.temperature >= 25:
+                self.led.green()
+            elif self.temperature < 25:
+                self.led.blue()
         if self.temperature >= 30:
             self.switch_status(0, 1)
-
-
-class StatusLED:
-    """Status LED indicating temperature changes"""
-
-    def __init__(self):
-        """Initializing status LED"""
-        self.led_pin = 21
-        GPIO.setup(self.led_pin, GPIO.OUT)
-
-    def pulse(self):  # todo: add proper status LED to indicate temperature / buy multicolor LED :)
-        """Flash LED: todo: use RGB-mode to indicate activity"""
-        GPIO.output(self.led_pin, GPIO.HIGH)
-        sleep(0.2)
-        GPIO.output(self.led_pin, GPIO.LOW)
+            self.led.red()
 
 
 print("\nInitializing DHT22 & Relay Class...")
@@ -186,14 +226,12 @@ sensor.knight_rider()  # Testing relay Knight Rider style
 sensor.print_data()
 sensor.load_data()
 
-led = StatusLED()
-
 print("\nWaiting 2 seconds, refreshing sensor data and setting min/max values...")
 sleep(2)
 while True:
     print("\n")
     sensor.refresh()
-    led.pulse()
+    sensor.led.pulse()
     sensor.set_minmax()
     sensor.save_data()
     sensor.check_temp()
