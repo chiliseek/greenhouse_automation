@@ -7,7 +7,7 @@ import RPi.GPIO as GPIO
 import Adafruit_DHT
 
 
-class DHT22():
+class DHT22:
     """Initialize and access DHT22 sensor"""
 
     def __init__(self):
@@ -39,7 +39,8 @@ class DHT22():
         self.print_data()
 
     def save_data(self):
-        """Save all data to a json file - todo: add log functionality (log value and time to create a graph later on)"""
+        """Save all data to a json file - todo: add log functionality (log value and time to create a graph with
+        matplotlib later on)"""
         data = [
             self.temperature,  # 0 - Index
             self.humidity,     # 1
@@ -108,7 +109,7 @@ class Relay(DHT22):
             '3': 24,
             '4': 25,
         }
-        for chan, pin_nr in self.channel.items():
+        for chan, pin_nr in self.channel.items():  # Initializing relay board
             GPIO.setup(pin_nr, GPIO.OUT)
 
     def switch_status(self, status, chan):
@@ -142,10 +143,10 @@ class Relay(DHT22):
                 GPIO.output(self.channel[str(chan)], GPIO.HIGH)
                 print(f"Relay channel {chan} is {colored('deactivated', 'magenta')}.")
 
-    def knight_rider(self, times='0'):
+    def knight_rider(self, times='1'):
         """Test mode: switch all relays on and off in knight rider style"""
-        counter = int(times)
-        while counter < 1:  # Relay Knight Rider
+        counter = 0
+        while counter < int(times):  # Relay Knight Rider
             for chan in range(1, 5):
                 self.switch_status(1, chan)
                 sleep(0.1)
@@ -158,10 +159,23 @@ class Relay(DHT22):
 
     def check_temp(self):
         """Switch relay status based on temperature/humidity changes"""
-        if 25 > self.temperature  < 30:  # Seedling heat mat control
+        if 25 > self.temperature < 30:  # Seedling heat mat control
             self.switch_status(1, 1)
         if self.temperature >= 30:
             self.switch_status(0, 1)
+
+
+class StatusLED:
+    """Status LED indicating temperature"""
+
+    def __init__(self):
+        self.led_pin = 21  # Initializing status LED pin
+        GPIO.setup(self.led_pin, GPIO.OUT)  # ^^
+
+    def pulse(self):  # todo: add proper status LED to indicate temperature / buy multicolor LED :)
+        GPIO.output(self.led_pin, GPIO.HIGH)
+        sleep(0.2)
+        GPIO.output(self.led_pin, GPIO.LOW)
 
 
 print("\nInitializing DHT22 & Relay Class...")
@@ -170,11 +184,14 @@ sensor.knight_rider()  # Testing relay Knight Rider style
 sensor.print_data()
 sensor.load_data()
 
+led = StatusLED()
+
 print("\nWaiting 2 seconds, refreshing sensor data and setting min/max values...")
 sleep(2)
 while True:
     print("\n")
     sensor.refresh()
+    led.pulse()
     sensor.set_minmax()
     sensor.save_data()
     sensor.check_temp()
