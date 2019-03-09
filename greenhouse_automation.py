@@ -42,8 +42,8 @@ class StatusLED:
             GPIO.output(pin, GPIO.LOW)
         GPIO.output(self.led_blue, GPIO.HIGH)
 
-    def pulse(self):
-        """Flash LED to indicate activity"""
+    def pulse(self):  # todo: add proper status LED to indicate temperature / buy multicolor LED :)
+        """Flash LED: todo: use RGB-mode to indicate activity"""
         for pin in self.pinlist:
             GPIO.output(pin, GPIO.LOW)
 
@@ -209,12 +209,13 @@ class Relay(DHT22):
 
     def check_temp(self):
         """Switch relay status based on temperature/humidity changes"""
+        if self.temperature >= 25:  # Switch LED Status
+            self.led.green()
+        elif self.temperature < 25:  # ^^
+            self.led.blue()
+
         if 25 > self.temperature < 30:  # Seedling heat mat control
             self.switch_status(1, 1)
-            if self.temperature >= 25:
-                self.led.green()
-            elif self.temperature < 25:
-                self.led.blue()
         if self.temperature >= 30:
             self.switch_status(0, 1)
             self.led.red()
