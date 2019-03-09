@@ -42,8 +42,8 @@ class StatusLED:
             GPIO.output(pin, GPIO.LOW)
         GPIO.output(self.led_blue, GPIO.HIGH)
 
-    def pulse(self):  # todo: add proper status LED to indicate temperature / buy multicolor LED :)
-        """Flash LED: todo: use RGB-mode to indicate activity"""
+    def pulse(self):
+        """Flash LED to indicate activity"""
         for pin in self.pinlist:
             GPIO.output(pin, GPIO.LOW)
 
