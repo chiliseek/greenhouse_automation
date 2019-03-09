@@ -166,13 +166,15 @@ class Relay(DHT22):
 
 
 class StatusLED:
-    """Status LED indicating temperature"""
+    """Status LED indicating temperature changes"""
 
     def __init__(self):
-        self.led_pin = 21  # Initializing status LED pin
-        GPIO.setup(self.led_pin, GPIO.OUT)  # ^^
+        """Initializing status LED"""
+        self.led_pin = 21
+        GPIO.setup(self.led_pin, GPIO.OUT)
 
     def pulse(self):  # todo: add proper status LED to indicate temperature / buy multicolor LED :)
+        """Flash LED: todo: use RGB-mode to indicate activity"""
         GPIO.output(self.led_pin, GPIO.HIGH)
         sleep(0.2)
         GPIO.output(self.led_pin, GPIO.LOW)
