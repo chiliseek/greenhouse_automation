@@ -27,3 +27,5 @@ Planned:
 * OLED/e-ink display support
 * Data visualization (matplotlib)
 * Create "port" to MicroPython for ESP8266/ESP32
+* Websocket LIVE graph server?
+* MQTT support
