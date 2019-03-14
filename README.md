@@ -5,7 +5,7 @@ seedling heat mat and I'm going to expand the scope of the project as I'll progr
 running on a RPi Zero which is total overkill. The plan is to port the script to MicroPython and run it on an 
 ESP8266/ESP32.
 
-For now the script is measuring temperature and humidity every 30 seconds. It will then determine min and max values 
+For now it is measuring temperature and humidity every 30 seconds. It will then determine min and max values 
 and saves it with the actual temperature and humidity in a json file. When the script is loaded it will check for the 
 json file and load its values, if the actual values are not "greater". Depending on the temperature the script will 
 en- & disable the relay board to switch the heat mat on or off. Additionally I've added a status LED to indicate the 
