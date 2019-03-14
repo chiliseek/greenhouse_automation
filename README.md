@@ -12,7 +12,7 @@ en- & disable the relay board to switch the heat mat on or off. Additionally I'v
 temperature state.
 
 ### Components and experimental setup
-[![alt text](https://i.imgur.com/VS2tkKm.jpg)
+[![alt text](https://i.imgur.com/JkfmtkO.jpg)
 ](https://imgur.com/a/4u1EfFY)
 *Click the image to check out some more pictures...*
 
@@ -20,7 +20,7 @@ List of parts:
 * Raspberry Pi Zero (+SD card, power supply)
 * 4 channel relay board
 * DHT22 sensor (resistor included)
-* Heating mat for seedlings
+* Seedling Heat Mat
 * RGB LED, resistors + jumper cable
 * Greenhouse
 
@@ -29,7 +29,7 @@ Implemented:
 * Measuring temperature / humidity
 * Determine min and max values
 * Saving and loading data from json file
-* Swtiching relay board status / switching heat mat on/off
+* Switching relay board status to turn heat mat on/off
 * Indicate temperature state via status LED
 
 Planned:
