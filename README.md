@@ -2,7 +2,7 @@
 ## Project overview
 This is my first python project. Its an attempt to automate a greenhouse with python. Starting small, I'll automate a 
 seedling heat mat and I'm going to expand the scope of the project as I'll progress. At the moment the script is 
-running on a RPi Zero which it total overkill. The plan is to port the script to MicroPython and run it on an 
+running on a RPi Zero which is total overkill. The plan is to port the script to MicroPython and run it on an 
 ESP8266/ESP32.
 
 For now the script is measuring temperature and humidity every 30 seconds. It will then determine min and max values 
