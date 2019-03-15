@@ -37,7 +37,7 @@ Planned:
 * OLED/e-ink display support
 * Data visualization (matplotlib)
 * Create "port" to MicroPython for ESP8266/ESP32
-* Add more devices to the relay board to improve clima control Ultraschallvernebler
+* Add more devices to the relay board to improve clima control
   * Ultraschallvernebler
   * Ventilation
 * Websocket LIVE graph server?
