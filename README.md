@@ -1,6 +1,6 @@
 # WIP: Greenhouse automation with the RPi and Python 3 
 ## Project overview
-I have chosen to automate a greenhouse as my first python project. Starting small, I'll automate a 
+I have chosen to automate a greenhouse as my first python project. Starting small, I have automated a 
 Seedling heat mat and I am going to expand the scope of the project, as I will progress. For now the script is 
 running on a RPi Zero which is total overkill. The plan is to port the script to MicroPython and run it on an 
 ESP8266/ESP32.
